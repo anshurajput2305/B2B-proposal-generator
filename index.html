@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GreenCart B2B — AI Proposal Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="src/styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="logo">
+      <div class="logo-sq">🌿</div>
+      <div>
+        <div class="logo-text">GreenCart B2B</div>
+        <div class="logo-sub">AI Proposal Engine v1.0</div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <span class="pill py">Module 2</span>
+      <span class="pill pk">AI-Powered</span>
+    </div>
+  </nav>
+
+  <!-- APP ROOT -->
+  <div id="app"></div>
+
+  <!-- TEMPLATES -->
+
+  <!-- FORM PAGE -->
+  <template id="tmpl-form">
+    <div class="pg-form">
+      <div class="eyebrow">✦ Sustainable Commerce · 2025</div>
+      <h1 class="h1">Build your<br /><span class="h1-accent lora">green proposal</span><br />in seconds.</h1>
+      <p class="sub">Enter client details — our engine selects the optimal sustainable product mix, allocates budget intelligently, and Claude writes the strategy.</p>
+
+      <div class="arch">
+        <div class="a-step"><span class="a-lbl">Step 01</span><span class="a-name aw">Validate</span></div>
+        <div class="a-step"><span class="a-lbl">Step 02</span><span class="a-name ay">Select Products</span></div>
+        <div class="a-step"><span class="a-lbl">Step 03</span><span class="a-name ay">Budget Alloc</span></div>
+        <div class="a-step"><span class="a-lbl">Step 04</span><span class="a-name am">AI Narrative</span></div>
+        <div class="a-step"><span class="a-lbl">Step 05</span><span class="a-name aw">JSON Output</span></div>
+      </div>
+
+      <div id="error-box" class="errbox hidden"></div>
+
+      <div class="fcard">
+        <div class="fgrid">
+          <div>
+            <label class="flabel">Company Name</label>
+            <input class="finput" id="f-company" placeholder="Acme Corp" />
+          </div>
+          <div>
+            <label class="flabel">Team Size</label>
+            <input class="finput" id="f-teamsize" type="number" value="50" min="1" />
+          </div>
+          <div>
+            <label class="flabel">Industry</label>
+            <select class="finput" id="f-industry">
+              <option>Technology</option>
+              <option>Retail</option>
+              <option>Healthcare</option>
+              <option>Hospitality</option>
+              <option>Finance</option>
+              <option>Education</option>
+            </select>
+          </div>
+          <div>
+            <label class="flabel">Timeline</label>
+            <select class="finput" id="f-timeline">
+              <option>Q1 2025</option>
+              <option selected>Q2 2025</option>
+              <option>Q3 2025</option>
+              <option>Q4 2025</option>
+              <option>H1 2026</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label class="flabel">Budget (INR)</label>
+          <input class="finput" id="f-budget" type="number" value="420000" min="40000" />
+          <div class="presets" id="preset-btns">
+            <button class="preset" data-val="84000">&#8377;84,000</button>
+            <button class="preset" data-val="420000">&#8377;4,20,000</button>
+            <button class="preset" data-val="1260000">&#8377;12,60,000</button>
+            <button class="preset" data-val="4200000">&#8377;42,00,000</button>
+          </div>
+        </div>
+
+        <div style="margin-bottom:22px">
+          <label class="flabel">Sustainability Goals</label>
+          <textarea class="finput" id="f-goals" rows="3" placeholder="e.g. Reduce single-use plastics 60%, carbon neutral by 2026, improve ESG score..."></textarea>
+        </div>
+
+        <button class="submit" id="btn-generate">Generate AI Proposal →</button>
+      </div>
+    </div>
+  </template>
+
+  <!-- LOADING PAGE -->
+  <template id="tmpl-loading">
+    <div class="pg-center">
+      <div class="orb"></div>
+      <div>
+        <div class="ld-title">Building your proposal</div>
+        <div class="ld-sub">Business logic + Claude working in tandem</div>
+      </div>
+      <div class="pbar"><div class="pfill" id="progress-fill" style="width:0%"></div></div>
+      <div class="lsteps" id="loading-steps">
+        <div class="lstep pen" data-t="10"><span class="lstep-ico">·</span><span>Validating input</span></div>
+        <div class="lstep pen" data-t="30"><span class="lstep-ico">·</span><span>Selecting product mix</span></div>
+        <div class="lstep pen" data-t="52"><span class="lstep-ico">·</span><span>Allocating budget buckets</span></div>
+        <div class="lstep pen" data-t="70"><span class="lstep-ico">·</span><span>Computing impact metrics</span></div>
+        <div class="lstep pen" data-t="82"><span class="lstep-ico">·</span><span>AI generating proposal content</span></div>
+      </div>
+    </div>
+  </template>
+
+  <!-- ERROR PAGE -->
+  <template id="tmpl-error">
+    <div class="pg-center">
+      <div style="font-size:44px">⚠️</div>
+      <div style="font-size:20px;font-weight:800">Something went wrong</div>
+      <div id="error-messages" style="color:var(--muted);font-size:13px;text-align:center"></div>
+      <button class="backbtn" id="btn-back-error">← Back to form</button>
+    </div>
+  </template>
+
+  <!-- RESULT PAGE -->
+  <template id="tmpl-result">
+    <div class="pg-result">
+      <div class="rhead">
+        <div>
+          <div class="rcompany" id="r-company"></div>
+          <div class="rmeta" id="r-meta"></div>
+          <div class="rtags" id="r-tags"></div>
+        </div>
+        <button class="backbtn" id="btn-new">← New Proposal</button>
+      </div>
+
+      <div class="mstrip" id="metrics-strip"></div>
+
+      <div class="tabbar" id="tab-bar">
+        <button class="tabbt on" data-tab="overview">Overview</button>
+        <button class="tabbt" data-tab="products">Products</button>
+        <button class="tabbt" data-tab="impact">Impact</button>
+        <button class="tabbt" data-tab="json">JSON</button>
+        <button class="tabbt" data-tab="logs">Logs</button>
+      </div>
+
+      <div id="tab-content"></div>
+    </div>
+  </template>
+
+  <script type="module" src="src/data.js"></script>
+  <script type="module" src="src/engine.js"></script>
+  <script type="module" src="src/logger.js"></script>
+  <script type="module" src="src/api.js"></script>
+  <script type="module" src="src/ui.js"></script>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
