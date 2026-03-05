@@ -1,4 +1,8 @@
 # 🌿 GreenCart B2B — AI Proposal Generator
+![Node](https://img.shields.io/badge/Node.js-18-green)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![AI](https://img.shields.io/badge/AI-Llama3-orange)
+
 > Module 2 · Applied AI for Sustainable Commerce Internship
 
 An AI-powered B2B sustainable procurement proposal generator for Indian businesses. Enter client details — the business logic engine selects the optimal product mix, allocates budget intelligently, and AI writes the strategy.
